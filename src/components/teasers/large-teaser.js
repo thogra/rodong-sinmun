@@ -1,23 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import _ from 'lodash';
-import { themes, colors } from './util/colors';
+import { themes } from '../util/colors';
+import TeaserWrapper from './shared/large-wrapper';
+import Line from './shared/headline-line';
 
-const TeaserWrapper = styled.div`
-  background-color: ${props => props.bgColor || colors.yellow};
-  color: ${props => props.textColor || colors.dark};
-  width: 100%;
-  border-radius: 5px;
-
-  font-size: 13px;
-  overflow-x: hidden;
-  margin: 15px 0;
-
-  &:hover: {
-    box-shadow: 0 0 10px 5px #c8c8c8;
-    opacity: 0.8;
-  }
-`;
 
 const Headline = styled.div`
   font-family: 'Work Sans', sans-serif;
@@ -25,14 +12,7 @@ const Headline = styled.div`
   font-weight: bold;
 `;
 
-const Line = styled.p`
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-  font-size: ${(props) => props.emSize}em;
-`;
-
-export default class Teaser extends React.Component {
+export default class LargeTeaser extends React.Component {
   render() {
     const theme = _.get(themes, this.props.theme, themes.yellow);
     const lines = this.props.lines.map((line, idx) => (

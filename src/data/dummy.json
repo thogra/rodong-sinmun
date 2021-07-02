@@ -3,15 +3,37 @@
   "articles": [
     {
       "title": "Reagerer på Khader-anklager",
-      "titles": ["Reagerer på", "Khader-anklager"]
+      "titles": ["Reagerer på", "Khader-anklager"],
     },
     {
       "title": "Fange på fri fod",
       "titles": ["Fange", "på fri fod"]
     },
     {
+      "title": "Konservative i chok",
+      "titles": ["Konservative", "i chok"],
+      "image": {
+        "position": "left",
+        "size": {
+          "h": 310,
+          "w": 300
+        }
+      }
+    },
+    {
       "title": "Overrasker: Mor for første gang",
       "titles": ["Overrasker", "Mor for første", "gang"]
+    },
+    {
+      "title": "Kritiserer vært: For 'ung'",
+      "titles": ["Kritiserer", "vært:", "For 'ung'"],
+      "image": {
+        "position": "right",
+        "size": {
+          "h": 310,
+          "w": 300
+        }
+      }
     },
     {
       "title": "Undersøger muligt skyderi i lejlighed",

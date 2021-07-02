@@ -25,9 +25,11 @@ function getEmSize(part) {
 }
 
 export default function calculateFontsize(headlineParts, version='large') {
+  const multiplier = version === 'image-large' ? 0.7 : 1;
+  
   const data = _.map(headlineParts, (part) => ({
     text: part,
-    emSize: getEmSize(part),
+    emSize: multiplier* getEmSize(part),
   }));
   return data;
 }
