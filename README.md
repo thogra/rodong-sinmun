@@ -1,0 +1,2 @@
+# rodong-sinmun
+nope
