@@ -56,9 +56,9 @@ var e=require("process");Object.defineProperty(exports,"__esModule",{value:!0}),
 },{"styled-components":"OuUI","./util/colors":"GPMW"}],"yeS0":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var e=o(require("styled-components"));function o(e){return e&&e.__esModule?e:{default:e}}var t=e.default.div.withConfig({displayName:"TopBar",componentId:"tg__sc-5p4hn9-0"})(["position:sticky;top:0;z-index:1000002;width:100%;background-color:#fff;height:65px;border-color:#efefef;border-bottom:2px;filter:drop-shadow(2px 4px 3px #aaa);"]),r=t;exports.default=r;
 },{"styled-components":"OuUI"}],"EaP1":[function(require,module,exports) {
-module.exports="/WorkSans-Bold.6a065ea5.woff2";
+module.exports="rodong-sinmun/WorkSans-Bold.6a065ea5.woff2";
 },{}],"PXSc":[function(require,module,exports) {
-module.exports="/WorkSans-SemiBold.9532bd8a.woff2";
+module.exports="rodong-sinmun/WorkSans-SemiBold.9532bd8a.woff2";
 },{}],"LpOl":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var e,t=require("styled-components"),n=r(require("../../../assets/fonts/WorkSans-Bold.woff2")),o=r(require("../../../assets/fonts/WorkSans-SemiBold.woff2"));function r(e){return e&&e.__esModule?e:{default:e}}function f(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var s=(0,t.createGlobalStyle)(e||(e=f(['\n    @font-face {\n      font-family: "Work Sans";\n      font-weight: bold;\n      src: url(',") format('woff2')\n    }\n\n    @font-face {\n      font-family: \"Work Sans\";\n      font-weight: light;\n      src: url(",") format('woff2')\n    }\n\n\n"])),n.default,o.default);exports.default=s;
 },{"styled-components":"OuUI","../../../assets/fonts/WorkSans-Bold.woff2":"EaP1","../../../assets/fonts/WorkSans-SemiBold.woff2":"PXSc"}],"jDAB":[function(require,module,exports) {
