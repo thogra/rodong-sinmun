@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
+    "scrape": "node scraper/scraper.js",
     "build": "parcel build index.html --no-source-maps --public-url './'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
     "lodash": "^4.17.21",
+    "node-fetch": "^2.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
