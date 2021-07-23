@@ -1,10 +1,28 @@
 const cheerio = require('cheerio');
+const sizeOf = require('image-size');
 const fetch = require('node-fetch');
 const _ = require('lodash');
-const baseUrl = 'http://www.rodong.rep.kp/en/';
+const { cleanHref } = require('./rodong-utils');
+
+const baseUrl = 'http://www.rodong.rep.kp';
+
+const fetchImagePage = async (base, imagePath) => {
+  const response = await fetch(`${base}/en/${imagePath}`);
+  const body = await response.text();
+  const $ = cheerio.load(body);
+  const imageElements = $('#slides .slide img').toArray();
+
+  return _.map(imageElements, image => {
+    return { 
+      url: baseUrl + $(image).attr('src'),
+      height: $(image).attr('height'),
+      height: $(image).attr('width'),
+  }
+  });
+}
 
 const fetchBasePage = async () => {
-  const response = await fetch(baseUrl);
+  const response = await fetch(baseUrl + '/en/');
   const body = await response.text();
   const $ = cheerio.load(body);
   // const mainContent = $('body > center > table')[1];
@@ -16,27 +34,30 @@ const fetchBasePage = async () => {
   const revolutionaryLinks = $(revolutionaryActivitiesBox)
     .find('td > a')
     .toArray();
-  // javascript:article_open('index.php?strPageID=SF01_02_01&newsID=2021-07-12-0003')
 
-  const pureLinks = _.map(revolutionaryLinks, (linkElement) => {
+  const pureLinks = _.compact(_.map(revolutionaryLinks, (linkElement) => {
     const href = $(linkElement).attr('href');
     const imgLink = $(linkElement).siblings('nobr').find('a').attr('href');
 
     if (_.startsWith(href, 'javascript:article_open(')) {
       return {
-        url:
-          baseUrl +
-          href.substring(
-            'javascript:article_open('.length + 1,
-            href.length - 2,
-          ),
-        image: imgLink,
+        url: `${baseUrl}/en/${cleanHref(href)}`,
+        image: cleanHref(imgLink),
       };
     }
     return undefined;
-  });
+  }));
+  
+  const withImages = await Promise.all(_.map(pureLinks ,async (item) => {
+    if (item.image) {
+      const images = await fetchImagePage(baseUrl, item.image);
+      return {...item, images };
+    }
+    return item;
+  }));
 
-  console.log(_.compact(pureLinks)); // prints a chock full of HTML richness
+  console.log('scraped::', withImages);
+
   return body;
 };
 
