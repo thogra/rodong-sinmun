@@ -102,7 +102,7 @@ const fetchBasePage = async () => {
     }),
   );
 
-  fs.writeFileSync('./data/rodong.json', JSON.stringify(withContents));
+  fs.writeFileSync('./data/rodong.json', JSON.stringify(withContents, null, 2));
 
   return body;
 };
