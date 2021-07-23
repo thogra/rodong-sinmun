@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
+const fs = require('fs');
 const _ = require('lodash');
 const { cleanHref } = require('./rodong-utils');
 
@@ -101,7 +102,8 @@ const fetchBasePage = async () => {
     }),
   );
 
-  console.log('scraped::', withContents);
+  fs.writeFileSync('./data/rodong.json', JSON.stringify(withContents));
+
   return body;
 };
 
