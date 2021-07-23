@@ -16,7 +16,7 @@ const fetchImagePage = async (base, imagePath) => {
     return {
       url: baseUrl + $(image).attr('src'),
       height: $(image).attr('height'),
-      height: $(image).attr('width'),
+      width: $(image).attr('width'),
     };
   });
 };
@@ -102,7 +102,13 @@ const fetchBasePage = async () => {
     }),
   );
 
-  fs.writeFileSync('./data/rodong.json', JSON.stringify(withContents, null, 2));
+  const data = {
+    title: 'Rodong Sinmun',
+    topNews: withContents,
+    dateScraped: new Date().toISOString(),
+  }
+
+  fs.writeFileSync('./data/rodong.json', JSON.stringify(data, null, 2));
 
   return body;
 };
