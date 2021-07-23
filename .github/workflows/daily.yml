@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v1
 
       - name: Fetch resources
-        run: npm i && npm run scraper
+        run: npm i && npm run scrape
 
       - name: Update resources
         uses: test-room-7/action-update-file@v1
