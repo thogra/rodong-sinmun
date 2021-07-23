@@ -1,0 +1,32 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Daily Scraper
+
+# Controls when the workflow will run
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '20 1 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  resources:
+    name: Update resources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - uses: actions/setup-node@v1
+
+      - name: Fetch resources
+        run: npm i && npm run scraper
+
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: data/rodong.json
+            commit-msg: Update rodong
+            github-token: ${{ secrets.GITHUB_TOKEN }}
