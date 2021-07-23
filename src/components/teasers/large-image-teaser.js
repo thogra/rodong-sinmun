@@ -12,31 +12,40 @@ const Headline = styled.div`
   font-weight: bold;
 `;
 
-const ImageWrapper = styled.div`
-  background-color: #ccc;
-  width: 600px;
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-export default class LargeTeaser extends React.Component {
+export default class LargeImageTeaser extends React.Component {
   render() {
     const theme = _.get(themes, this.props.theme, themes.yellow);
     const lines = this.props.lines.map((line, idx) => (
       <Line key={`line-${idx}`} emSize={line.emSize}>{line.text}</Line>
     ));
 
-    const imagePos = _.get(this.props, 'imagePosition', 'left');
+    const image = _.get(this.props, 'image');
+    const imagePosition = _.get(this.props, 'image.imagePosition', 'left');
+    
+    const ImageWrapper = styled.div`
+      min-width: ${image.width / 2}px;
+      max-width: ${image.width}px;
+      height: auto;
+      background-image: url("${image.url}");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-color: #ccc;
+    `;
 
     return (
       <TeaserWrapper bgColor={theme.bgColor} textColor={theme.textColor}>
         <Container>
-          { imagePos === 'left' && <ImageWrapper />  }
+          { imagePosition === 'left' && <ImageWrapper src={image.href}>&nbsp;
+          </ImageWrapper>  }
           <Headline>{lines}</Headline>
-          { imagePos === 'right' && <ImageWrapper />  }
+          { imagePosition === 'right' && <ImageWrapper src={image.href}>&nbsp;
+          </ImageWrapper>  }
         </Container>
       </TeaserWrapper>
     );

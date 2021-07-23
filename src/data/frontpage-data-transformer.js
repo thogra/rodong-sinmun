@@ -1,4 +1,4 @@
-import { map, get, words, reverse, isUndefined } from 'lodash';
+import { map, get, words, reverse, isUndefined, random } from 'lodash';
 
 import calculateFontsize from './font-size-calculator';
 
@@ -29,7 +29,6 @@ export function splitTitle(title, maxLength = 20) {
   }
   return titles;
 }
-
 export default function transformArticlesToFrontpage(title, articles) {
   const transformed = map(articles, (article) => {
     const titles = splitTitle(article.title);
@@ -38,13 +37,19 @@ export default function transformArticlesToFrontpage(title, articles) {
     return {
       title: article.title,
       titles,
-      image,
+      image: {
+        ...image,
+        imagePosition: randomImagePosition(),
+      },
       headline,
     };
   });
-
   return {
     title,
     articles: transformed,
   };
+}
+
+function randomImagePosition() {
+  return Math.random() > 0.5 ? 'left' : 'right';
 }

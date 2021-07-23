@@ -21,10 +21,11 @@ export default class App extends React.Component {
 
   render() {
     const teasers = _.map(this.data, (item, idx) => {
-      if (item.image) {
+      if (item.image?.url) {
         return (
           <LargeImageTeaser
             lines={item.headline}
+            image={item.image}
             theme={randomTheme()}
             key={`teaser-${idx}`}
           />
