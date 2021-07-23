@@ -6,19 +6,17 @@ import GlobalFonts from './components/util/fonts';
 import LargeTeaser from './components/teasers/large-teaser';
 import LargeImageTeaser from './components/teasers/large-image-teaser';
 import { randomTheme } from './components/util/colors';
-import calculateFontsize from './data/font-size-calculator';
-import dummyData from './data/dummy.json';
+import transformArticlesToFrontpage from './data/frontpage-data-transformer';
+import rodongData from '../data/rodong.json';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.data = _.map(dummyData.articles, (article) => ({
-      ...article,
-      headline: calculateFontsize(
-        article.titles,
-        article.image ? 'image-large' : 'large',
-      ),
-    }));
+    const transformed = transformArticlesToFrontpage(
+      rodongData.title,
+      rodongData.topNews,
+    );
+    this.data = transformed.articles;
   }
 
   render() {
