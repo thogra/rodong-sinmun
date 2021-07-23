@@ -26,12 +26,12 @@ export default class LargeImageTeaser extends React.Component {
 
     const image = _.get(this.props, 'image');
     const imagePosition = _.get(this.props, 'image.imagePosition', 'left');
-    
+
     const ImageWrapper = styled.div`
       min-width: ${image.width / 2}px;
       max-width: ${image.width}px;
       height: auto;
-      background-image: url("${image.url}");
+      background-image: url(data:image/jpeg;base64,${image.dataUrl});
       background-size: contain;
       background-repeat: no-repeat;
       background-position: 50% 50%;
