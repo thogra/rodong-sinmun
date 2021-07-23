@@ -6,26 +6,47 @@ const { cleanHref } = require('./rodong-utils');
 
 const baseUrl = 'http://www.rodong.rep.kp';
 
+async function fetchImage(url) {
+  try {
+    const response = await fetch(url, {timeout: 30000});
+    if (response.status === 200) {
+      const buffer = await response.buffer();
+      return buffer.toString('base64');
+    }
+  } catch(e) {
+    console.log('could not fetch image', url);
+  }
+  return undefined;
+}
+
 const fetchImagePage = async (base, imagePath) => {
-  const response = await fetch(`${base}/en/${imagePath}`);
+  const response = await fetch(`${base}/en/${imagePath}`, {timeout: 30000});
   const body = await response.text();
   const $ = cheerio.load(body);
   const imageElements = $('#slides .slide img').toArray();
 
-  return _.map(imageElements, (image) => {
+  const images = _.map(imageElements, (image) => {
+    const url = baseUrl + $(image).attr('src');
     return {
-      url: baseUrl + $(image).attr('src'),
+      url,
       height: $(image).attr('height'),
       width: $(image).attr('width'),
     };
   });
+
+  if(images.length > 0 && images[0]?.url) {
+    const firstImageUrl = images[0].url;
+    const dataUrl = await fetchImage(firstImageUrl);
+    images[0].dataUrl = dataUrl;
+  }
+  return images;
 };
 
 const fetchArticlePage = async (articleUrl) => {
-  const response = await fetch(`${articleUrl}`);
+  const response = await fetch(`${articleUrl}`, { timeout: 30000 });
   if (response.status !== 200) {
     console.error(
-      `Got response status ${response.status} for url: `,
+      `Got response status ${response.status} for article: `,
       articleUrl,
     );
     return undefined;
@@ -95,8 +116,12 @@ const fetchBasePage = async () => {
   const withContents = await Promise.all(
     _.map(withImages, async (item) => {
       if (item.url) {
-        const articleData = await fetchArticlePage(item.url);
-        return { ...item, ...articleData };
+        try {
+          const articleData = await fetchArticlePage(item.url);
+          return { ...item, ...articleData };
+        } catch(err) {
+          console.log('Could not fetch article page', err);
+        }
       }
       return item;
     }),
