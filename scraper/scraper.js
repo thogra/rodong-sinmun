@@ -34,10 +34,10 @@ const fetchImagePage = async (base, imagePath) => {
     };
   });
 
-  if(images.length > 0 && images[0]?.url) {
-    const firstImageUrl = images[0].url;
+  if(_.get(images, '0.url')) {
+    const firstImageUrl = _.get(images, '0.url');
     const dataUrl = await fetchImage(firstImageUrl);
-    images[0].dataUrl = dataUrl;
+    _.set(images, '0.url', dataUrl)
   }
   return images;
 };
