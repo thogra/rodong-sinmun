@@ -27,6 +27,9 @@ export default class LargeImageTeaser extends React.Component {
     const image = _.get(this.props, 'image');
     const imagePosition = _.get(this.props, 'image.imagePosition', 'left');
 
+    const teaserIsTwoLine = this.props.lines.length <= 2;
+    const scaleFactor = teaserIsTwoLine ? 1.8 : 1.2;
+
     const ImageWrapper = styled.div`
       min-width: ${image.width / 2}px;
       max-width: ${image.width}px;
@@ -40,7 +43,7 @@ export default class LargeImageTeaser extends React.Component {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: #ccc;
-    transform: scale(1.2);
+    transform: scale(${scaleFactor});
     height: 100%;
     `;
 
