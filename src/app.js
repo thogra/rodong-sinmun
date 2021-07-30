@@ -15,6 +15,11 @@ export default class App extends React.Component {
     const transformed = transformArticlesToFrontpage(
       rodongData.title,
       rodongData.topNews,
+      { shortenPositions: [
+        { position: 0, wordCount: 5 },
+        { position: 1, wordCount: 7 },
+        { position: 2, wordCount: 4 },
+      ]},
     );
     this.data = transformed.articles;
   }

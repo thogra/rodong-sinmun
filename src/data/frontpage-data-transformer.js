@@ -1,18 +1,20 @@
-import { map, get, words, reverse, isUndefined, random } from 'lodash';
+import { map, get, words, reverse, isUndefined, slice, find } from 'lodash';
 
 import calculateFontsize from './font-size-calculator';
 
-function limitSize(parts) {
-  if (Math.random() > 0.5) {
-  }
-
-  return parts;
+function limitSize(parts, options) {
+  return slice(parts, 0, options?.wordCount || 5);
 }
 
-export function splitTitle(title, options = { maxLength: 20 }) {
-  const { maxLength } = options;
-  const splitTitle = limitSize(words(title));
-  const titleParts = reverse(splitTitle);
+export function splitTitle(
+  title,
+  options = { maxLength: 20, shorten: undefined },
+) {
+  const { maxLength, shorten } = options;
+  const splitTitle = words(title);
+  const titleParts = reverse(
+    shorten ? limitSize(splitTitle, shorten): splitTitle,
+  );
   const titles = [];
   let currentLine = '';
 
@@ -38,9 +40,18 @@ export function splitTitle(title, options = { maxLength: 20 }) {
   }
   return titles;
 }
-export default function transformArticlesToFrontpage(title, articles) {
-  const transformed = map(articles, (article) => {
-    const titles = splitTitle(article.title);
+
+export default function transformArticlesToFrontpage(
+  title,
+  articles,
+  options = { shortenPositions: [] },
+) {
+  const transformed = map(articles, (article, idx) => {
+    const shorten = find(options?.shortenPositions, ['position', idx]);
+    const titles = splitTitle(article.title, {
+      maxLength: 20,
+      shorten,
+    });
     const image = get(article, 'images.0');
     const headline = calculateFontsize(titles, image ? 'image-large' : 'large');
     return {
