@@ -8,15 +8,18 @@ describe('fontpage-data-transformer.js', () => {
     });
 
     it('an overlong title with one word', () => {
-      expect(splitTitle('hello', 3)).toEqual(['hello']);
+      expect(splitTitle('hello', { maxLength: 3 })).toEqual(['hello']);
     });
 
     it('an overlong title', () => {
-      expect(splitTitle('hello there', 4)).toEqual(['hello', 'there']);
+      expect(splitTitle('hello there', { maxLength: 4 })).toEqual([
+        'hello',
+        'there',
+      ]);
     });
 
     it('an overlong title', () => {
-      expect(splitTitle('hello there how are you', 5)).toEqual([
+      expect(splitTitle('hello there how are you', { maxLength: 5 })).toEqual([
         'hello there',
         'how are',
         'you',

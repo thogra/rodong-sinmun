@@ -2,8 +2,17 @@ import { map, get, words, reverse, isUndefined, random } from 'lodash';
 
 import calculateFontsize from './font-size-calculator';
 
-export function splitTitle(title, maxLength = 20) {
-  const titleParts = reverse(words(title));
+function limitSize(parts) {
+  if (Math.random() > 0.5) {
+  }
+
+  return parts;
+}
+
+export function splitTitle(title, options = { maxLength: 20 }) {
+  const { maxLength } = options;
+  const splitTitle = limitSize(words(title));
+  const titleParts = reverse(splitTitle);
   const titles = [];
   let currentLine = '';
 
