@@ -30,21 +30,27 @@ export default class LargeImageTeaser extends React.Component {
     const ImageWrapper = styled.div`
       min-width: ${image.width / 2}px;
       max-width: ${image.width}px;
-      height: auto;
-      background-image: url(data:image/jpeg;base64,${image.dataUrl});
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-      background-color: #ccc;
+      flex: auto;
+      overflow: hidden;
+    `;
+
+    const BgImage = styled.div`
+    background-image: url(data:image/jpeg;base64,${image.dataUrl});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: #ccc;
+    transform: scale(1.2);
+    height: 100%;
     `;
 
     return (
       <TeaserWrapper bgColor={theme.bgColor} textColor={theme.textColor}>
         <Container>
-          { imagePosition === 'left' && <ImageWrapper src={image.href}>&nbsp;
+          { imagePosition === 'left' && <ImageWrapper><BgImage src={image.href}>&nbsp;</BgImage>
           </ImageWrapper>  }
           <Headline>{lines}</Headline>
-          { imagePosition === 'right' && <ImageWrapper src={image.href}>&nbsp;
+          { imagePosition === 'right' && <ImageWrapper><BgImage src={image.href}>&nbsp;</BgImage>
           </ImageWrapper>  }
         </Container>
       </TeaserWrapper>
