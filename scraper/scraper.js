@@ -37,7 +37,7 @@ const fetchImagePage = async (base, imagePath) => {
   if(_.get(images, '0.url')) {
     const firstImageUrl = _.get(images, '0.url');
     const dataUrl = await fetchImage(firstImageUrl);
-    _.set(images, '0.url', dataUrl)
+    _.set(images, '0.dataUrl', dataUrl)
   }
   return images;
 };
